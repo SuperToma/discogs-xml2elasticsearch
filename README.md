@@ -1,18 +1,29 @@
 # discogs-xml2elasticsearch
 
 This project is a importer of Discogs XMLs : https://data.discogs.com/
-to Elasticsearch
+into Elasticsearch
 
 It has been developed with Elasticsearch 6.2
 
 Feel free to fork & upgrade.
 
-Usage :
+## How it works : 
 
-npm run import -- -h
+This will create an index for each files : 
 
-> discogs-xml2elasticsearch@0.1.0 import /Users/thomas/Development/discogs-xml2elasticsearch
-> node boot.js "-h"
+  - artists
+  - masters
+  - releases
+
+## Installation :
+
+> npm install
+
+Configure server Elasticsearch with file config/config.json
+
+## Usage :
+
+> npm run import -- -h
 
 usage: boot.js [-h] [-v] [-d DATE] [-f {artists,masters,releases,labels}]
 
@@ -24,3 +35,12 @@ Optional arguments:
   -d DATE, --date DATE  Specify a Discogs date file. ex: 20170101
   -f {artists,masters,releases,labels}, --file {artists,masters,releases,labels}
                         Specify a Discogs type to import
+                        
+## Todo 
+
+implement labels :
+
+ - Add labels in config.json
+ - Add mapping in src/elasticsearch/mappings/labels.mapping.json
+
+## Known bugs
