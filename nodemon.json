@@ -1,0 +1,10 @@
+{
+  "verbose": false,
+  "ignore": [
+    ".gitignore", ".git",
+    "*.jade",
+    "client", "node_modules", "public", "test",
+    "webpack.config.js"
+  ],
+  "watch": "*.js"
+}

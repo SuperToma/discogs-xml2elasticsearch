@@ -1,0 +1,252 @@
+{
+  "properties": {
+    "id": {
+      "type": "integer",
+      "index": false
+    },
+    "status": {
+      "type": "keyword",
+      "index": false
+    },
+    "released": {
+      "type": "keyword",
+      "index": false
+    },
+    "released": {
+      "type": "integer",
+      "index": false
+    },
+    "artists": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "index": false
+        },
+        "name": {
+          "type": "keyword",
+          "index": false
+        },
+        "anv": {
+          "type": "keyword",
+          "index": false
+        },
+        "join": {
+          "type": "keyword",
+          "index": false
+        },
+        "role": {
+          "type": "keyword",
+          "index": false
+        },
+        "tracks": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    },
+    "extraartists": {
+      "properties": {
+        "artist": {
+          "properties": {
+            "id": {
+              "type": "integer",
+              "index": false
+            },
+            "name": {
+              "type": "keyword",
+              "index": false
+            },
+            "anv": {
+              "type": "keyword",
+              "index": false
+            },
+            "join": {
+              "type": "keyword",
+              "index": false
+            },
+            "role": {
+              "type": "keyword",
+              "index": false
+            },
+            "tracks": {
+              "type": "keyword",
+              "index": false
+            }
+          }
+        }
+      }
+    },
+    "labels": {
+      "properties": {
+        "name": {
+          "type": "keyword",
+          "index": false
+        },
+        "catno": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    },
+    "formats": {
+      "properties": {
+        "name": {
+          "type": "keyword",
+          "index": false
+        },
+        "qty": {
+          "type": "integer",
+          "index": false
+        },
+        "text": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    },
+    "formats_description": {
+      "type": "keyword",
+      "index": false
+    },
+    "data_quality": {
+      "type": "keyword",
+      "index": false
+    },
+    "tracklist": {
+      "properties": {
+        "position": {
+          "type": "keyword",
+          "index": false
+        },
+        "title": {
+          "type": "keyword",
+          "index": false
+        },
+        "duration": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    },
+    "identifiers": {
+      "properties": {
+        "description": {
+          "type": "keyword",
+          "index": false
+        },
+        "type": {
+          "type": "keyword",
+          "index": false
+        },
+        "value": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    },
+    "genres": {
+      "type": "keyword",
+      "index": false
+    },
+    "images": {
+      "properties": {
+        "width": {
+          "type": "integer",
+          "index": false
+        },
+        "object_type_name": {
+          "type": "keyword",
+          "index": false
+        },
+        "height": {
+          "type": "integer",
+          "index": false
+        },
+        "uri150": {
+          "type": "keyword",
+          "index": false
+        },
+        "imageType": {
+          "type": "keyword",
+          "index": false
+        },
+        "uri": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    },
+    "notes": {
+      "type": "keyword",
+      "index": false
+    },
+    "styles": {
+      "type": "keyword",
+      "index": false
+    },
+    "country": {
+      "type": "keyword",
+      "index": false
+    },
+    "released": {
+      "type": "keyword",
+      "index": false
+    },
+    "title": {
+      "type": "keyword",
+      "index": false
+    },
+    "videos": {
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "index": false
+        },
+        "embed": {
+          "type": "keyword",
+          "index": false
+        },
+        "src": {
+          "type": "keyword",
+          "index": false
+        },
+        "title": {
+          "type": "keyword",
+          "index": false
+        },
+        "description": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    },
+    "companies": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "index": false
+        },
+        "name": {
+          "type": "keyword",
+          "index": false
+        },
+        "catno": {
+          "type": "keyword",
+          "index": false
+        },
+        "entity-type": {
+          "type": "keyword",
+          "index": false
+        },
+        "entity_type_name": {
+          "type": "keyword",
+          "index": false
+        },
+        "resource_url": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    }
+  }
+}

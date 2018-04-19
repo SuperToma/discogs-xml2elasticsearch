@@ -1,0 +1,63 @@
+{
+  "elasticsearch": {
+    "host": "localhost",
+    "port": "9200",
+    "nb_of_shards": 1,
+    "nb_of_replicas": 0
+  },
+  "discogs": {
+    "prefix_file_url": "https://discogs-data.s3-us-west-2.amazonaws.com/data/"
+  },
+  "objects": {
+    "master": {
+      "id": "$.id",
+      "artists": "artists[0].artist",
+      "data_quality": "data_quality[0].artist",
+      "genres": "genres[0].genre",
+      "images": "images[0].image",
+      "main_release": "main_release[0]",
+      "notes": "notes",
+      "styles": "styles[0].style",
+      "title": "title[0]",
+      "videos": "videos[0].video",
+      "year": "year[0]"
+    },
+    "artist": {
+      "id": "id[0]",
+      "images": "images[0].image",
+      "name": "name[0]",
+      "realname": "realname[0]",
+      "profile": "profile[0]",
+      "namevariations": "namevariations[0].name",
+      "aliases": "aliases[0].name",
+      "url": "url[0]",
+      "urls": "urls[0]",
+      "data_quality": "data_quality[0]",
+      "groups": "groups[0].name",
+      "members": "members[0]"
+    },
+    "release": {
+      "id": "$.id",
+      "status": "$.status",
+      "images": "images[0].image",
+      "artists": "artists[0]",
+      "title": "title[0]",
+      "labels": "labels[0].label",
+      "extraartists": "extraartists[0].artist[0]",
+      "formats": "formats[0].format[0].$",
+      "formats_description": "formats[0].format[0].descriptions[0]",
+      "genres": "genres[0].genre",
+      "styles": "styles[0].style",
+      "country": "country[0]",
+      "release": "released[0]",
+      "notes": "notes[0]",
+      "data_quality": "data_quality[0]",
+      "tracklist": "tracklist[0].track[0]",
+      "identifiers": "identifiers[0].identifier[0]",
+      "videos": "videos[0].video",
+      "companies": "companies[0].company[0]",
+      "released": "released[0]",
+      "master_id": "master_id[0]"
+    }
+  }
+}

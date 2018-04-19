@@ -1,0 +1,104 @@
+{
+  "properties": {
+    "id": {
+      "type": "integer",
+      "index": false
+    },
+    "name": {
+      "type": "keyword",
+      "index": false
+    },
+    "realname": {
+      "type": "keyword",
+      "index": false
+    },
+    "profile": {
+      "type": "keyword",
+      "index": false
+    },
+    "url": {
+      "type": "keyword",
+      "index": false
+    },
+    "urls": {
+      "properties": {
+        "url": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    },
+    "namevariations": {
+      "type": "keyword",
+      "index": false
+    },
+    "data_quality": {
+      "type": "keyword",
+      "index": false
+    },
+    "members": {
+      "properties": {
+        "id": {
+          "type": "integer",
+          "index": false
+        },
+        "name": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    },
+    "images": {
+      "properties": {
+        "width": {
+          "type": "integer",
+          "index": false
+        },
+        "object_type_name": {
+          "type": "keyword",
+          "index": false
+        },
+        "height": {
+          "type": "integer",
+          "index": false
+        },
+        "uri150": {
+          "type": "keyword",
+          "index": false
+        },
+        "imageType": {
+          "type": "keyword",
+          "index": false
+        },
+        "uri": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    },
+    "videos": {
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "index": false
+        },
+        "embed": {
+          "type": "keyword",
+          "index": false
+        },
+        "src": {
+          "type": "keyword",
+          "index": false
+        },
+        "title": {
+          "type": "keyword",
+          "index": false
+        },
+        "description": {
+          "type": "keyword",
+          "index": false
+        }
+      }
+    }
+  }
+}
