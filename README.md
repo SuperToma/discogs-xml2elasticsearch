@@ -17,9 +17,10 @@ This will create an index for each files :
 
 ## Installation :
 
+1. Run 
 > npm install
 
-Configure server Elasticsearch with file config/config.json
+2. Configure your Elasticsearch configuration in file config/config.json
 
 ## Usage :
 
@@ -41,9 +42,13 @@ Optional arguments:
   -f {artists,masters,releases,labels}, --file {artists,masters,releases,labels}
                         Specify a Discogs type to import
                         
+Example command : 
+
+> pm run import -- --d 20170101 -f master
+                        
 ## Todo 
 
-implement labels :
+implement labels import :
 
  - Add labels in config.json
  - Add mapping in src/elasticsearch/mappings/labels.mapping.json
