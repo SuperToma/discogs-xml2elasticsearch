@@ -30,9 +30,14 @@ usage: boot.js [-h] [-v] [-d DATE] [-f {artists,masters,releases,labels}]
 Discogs XMLs to Elasticsearch importer
 
 Optional arguments:
+
   -h, --help            Show this help message and exit.
+  
   -v, --version         Show program's version number and exit.
+  
+  
   -d DATE, --date DATE  Specify a Discogs date file. ex: 20170101
+  
   -f {artists,masters,releases,labels}, --file {artists,masters,releases,labels}
                         Specify a Discogs type to import
                         
