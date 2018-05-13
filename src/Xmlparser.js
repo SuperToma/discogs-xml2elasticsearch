@@ -89,7 +89,6 @@ class XmlParser {
       .pipe(through2.obj((tag, enc, cb) => xmlParser.parseString(tag, cb)));
 
     stream.on('data', data => {
-      bar.tick();
       bar.tick({
         remain: this.getBarRemainTime(bar),
       });
@@ -116,7 +115,7 @@ class XmlParser {
             //console.error(error);
           }
 
-          // Objects as properties
+          // Transform XML attributes ($) as properties
           if (Array.isArray(values) && typeof values[0].$ === 'object') {
             values = values.map(infos => infos.$);
           }
@@ -126,35 +125,39 @@ class XmlParser {
             values = values.filter(el => { el.uri.length > 0; });
           }
 
-          object[property] = values;
+          if (values && values.length > 0) { // Remove when checking if value is missing
+            object[property] = values;
+          }
         }
       }
 
       // Check if we missed a value in XML object
-      for (const property in data[tag]) {
+      /* for (const property in data[tag]) {
         if (property !== '$' && object.hasOwnProperty(property) === false) {
           console.log(`Property ${property} is missing : `);
           console.log(util.inspect(data[tag][property], false, null));
           console.log("\n\n");
         }
-      }
+      } */
 
       bulk.push(bulkAction, object);
 
-/*
       // DEBUG TRANSFORMATION
-      console.log('>>>');
-      console.log(util.inspect(data, false, null));
+      /*
+      console.log('\n\n\n>>>');
+      console.log(util.inspect(data.release.tracklist, false, null));
       console.log('<<<');
-      console.log(util.inspect(object, false, null));
-      process.exit(0);
-*/
+      console.log(util.inspect(object.tracklist, false, null));
+      //process.exit(0);
+      */
 
-      if (bulk.length === 200) {
+      if (bulk.length === 1000) {
         EsClient.sendBulk(bulk);
         bulk = [];
       }
     });
+
+    EsClient.sendBulk(bulk); // Send last bulk
 
     stream.on('end', console.log.bind(console, `Import of ${tag}s ended !`));
   }

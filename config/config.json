@@ -52,7 +52,7 @@
       "release": "released[0]",
       "notes": "notes[0]",
       "data_quality": "data_quality[0]",
-      "tracklist": "tracklist[0].track[0]",
+      "tracklist": "tracklist[0].track",
       "identifiers": "identifiers[0].identifier[0]",
       "videos": "videos[0].video",
       "companies": "companies[0].company[0]",

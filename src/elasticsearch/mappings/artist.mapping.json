@@ -5,8 +5,8 @@
       "index": false
     },
     "name": {
-      "type": "keyword",
-      "index": false
+      "type": "completion",
+      "preserve_position_increments": false
     },
     "realname": {
       "type": "keyword",

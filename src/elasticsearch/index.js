@@ -69,7 +69,7 @@ EsClient.checkIndex = async function (indexName) {
 
   const result = await EsClient.indices.putMapping({
     index: indexName,
-    type: 'master',
+    type: indexName,
     body: mapping,
   });
 
@@ -85,7 +85,7 @@ EsClient.sendBulk = function (bulk) {
   EsClient.bulk({
     body: bulk,
   }, (error, resp) => {
-    if (resp.error) {
+    if (resp.errors) {
       console.log('>>>');
       console.log(util.inspect(bulk, false, null));
       console.log('<<<');

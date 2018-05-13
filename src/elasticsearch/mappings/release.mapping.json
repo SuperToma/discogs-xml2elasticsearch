@@ -12,15 +12,10 @@
       "type": "keyword",
       "index": false
     },
-    "released": {
-      "type": "integer",
-      "index": false
-    },
     "artists": {
       "properties": {
         "id": {
-          "type": "integer",
-          "index": false
+          "type": "integer"
         },
         "name": {
           "type": "keyword",
@@ -119,12 +114,75 @@
           "index": false
         },
         "title": {
-          "type": "keyword",
-          "index": false
+          "type": "completion",
+          "preserve_position_increments": false
         },
         "duration": {
           "type": "keyword",
           "index": false
+        },
+        "artists": {
+          "properties": {
+            "artist": {
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "name": {
+                  "type": "keyword",
+                  "index": false
+                },
+                "anv": {
+                  "type": "keyword",
+                  "index": false
+                },
+                "join": {
+                  "type": "keyword",
+                  "index": false
+                },
+                "role": {
+                  "type": "keyword",
+                  "index": false
+                },
+                "tracks": {
+                  "type": "keyword",
+                  "index": false
+                }
+              }
+            }
+          }
+        },
+        "extraartists": {
+          "properties": {
+            "artist": {
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "index": false
+                },
+                "name": {
+                  "type": "keyword",
+                  "index": false
+                },
+                "anv": {
+                  "type": "keyword",
+                  "index": false
+                },
+                "join": {
+                  "type": "keyword",
+                  "index": false
+                },
+                "role": {
+                  "type": "keyword",
+                  "index": false
+                },
+                "tracks": {
+                  "type": "keyword",
+                  "index": false
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -185,10 +243,6 @@
       "index": false
     },
     "country": {
-      "type": "keyword",
-      "index": false
-    },
-    "released": {
       "type": "keyword",
       "index": false
     },
