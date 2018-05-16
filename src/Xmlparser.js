@@ -21,7 +21,6 @@ class XmlParser {
   }
 
   /**
-   *
    * @returns {Promise.<void>}
    */
   async importData () {
@@ -122,10 +121,15 @@ class XmlParser {
 
           // Remove empty images uri
           if (property === 'images') {
-            values = values.filter(el => { el.uri.length > 0; });
+            values = values.filter(value => value.uri.length > 0);
           }
 
-          if (values && values.length > 0) { // Remove when checking if value is missing
+          // Remove empty tracks
+          if (property === 'tracklist') {
+            values = values.filter(value => value.title[0].length > 0);
+          }
+
+          if (values !== null && values.length > 0) { // Remove when checking if value is missing
             object[property] = values;
           }
         }

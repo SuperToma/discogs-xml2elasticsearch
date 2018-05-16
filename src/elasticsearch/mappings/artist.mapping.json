@@ -5,8 +5,9 @@
       "index": false
     },
     "name": {
-      "type": "completion",
-      "preserve_position_increments": false
+      "type": "text",
+      "analyzer": "edge_ngram_analyzer",
+      "search_analyzer": "edge_ngram_search_analyzer"
     },
     "realname": {
       "type": "keyword",

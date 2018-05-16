@@ -35,6 +35,32 @@ EsClient.createIndex = async function (indexName) {
       settings: {
         number_of_shards: config.elasticsearch.nb_of_shards,
         number_of_replicas: config.elasticsearch.nb_of_replicas,
+        index: {
+          analysis: {
+            filter: {},
+            analyzer: {
+              edge_ngram_analyzer: {
+                filter: [
+                  'lowercase',
+                ],
+                tokenizer: "edge_ngram_tokenizer",
+              },
+              edge_ngram_search_analyzer: {
+                tokenizer: "lowercase",
+              },
+            },
+            tokenizer: {
+              edge_ngram_tokenizer: {
+                type: "edge_ngram",
+                min_gram: 2,
+                max_gram: 5,
+                token_chars: [
+                  "letter",
+                ],
+              },
+            },
+          },
+        },
       },
     },
   });
