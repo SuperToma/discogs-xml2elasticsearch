@@ -52,8 +52,8 @@ EsClient.createIndex = async function (indexName) {
             tokenizer: {
               edge_ngram_tokenizer: {
                 type: "edge_ngram",
-                min_gram: 2,
-                max_gram: 5,
+                min_gram: 3,
+                max_gram: 30,
                 token_chars: [
                   "letter",
                 ],

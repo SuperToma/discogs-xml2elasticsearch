@@ -4,6 +4,7 @@ import XmlTagStream from 'xml-tag-stream';
 import through2 from 'through2';
 import xmlParser from 'xml2js';
 import ProgressBar from 'progress';
+import _ from 'underscore';
 import config from '../config/config.json';
 import EsClient from './elasticsearch';
 
@@ -72,6 +73,7 @@ class XmlParser {
 
     const filePath = `${__dirname}/../downloads/discogs_${this.date}_${tag}s.xml`;
     const totalObjects = await this.getNbTagsInFile(filePath, tag);
+    //const totalObjects = 8000000;
 
     let bulk = [];
 
@@ -129,7 +131,7 @@ class XmlParser {
             values = values.filter(value => value.title[0].length > 0);
           }
 
-          if (values !== null && values.length > 0) { // Remove when checking if value is missing
+          if (values && values.length > 0) { // Remove when checking if value is missing
             object[property] = values;
           }
         }
@@ -144,7 +146,34 @@ class XmlParser {
         }
       } */
 
-      bulk.push(bulkAction, object);
+      // Filters
+      let allowInsert = false;
+
+      /* 100/s slower
+      const authorizedGenres = ["Brass & Military", "Electronic", "Pop", "Rock"];
+      if (typeof object.genres !== "undefined") {
+        if (_.intersection(object.genres, authorizedGenres).length > 0) {
+          allowInsert = true;
+        }
+      }
+      */
+
+      const authorizedStyles = [
+        "Dark Ambient", "Darkwave", "EBM", "Electro", "Goth Rock",
+        //"Experimental", "Witch House",
+        "Gothic Metal", "Industrial", "New Wave", "Synthwave", "Synth-pop",
+      ];
+
+      if (typeof object.styles !== "undefined") {
+        if (_.intersection(object.styles, authorizedStyles).length > 0) {
+          //console.log(_.intersection(object.styles, authorizedStyles));
+          allowInsert = true;
+        }
+      }
+
+      if (allowInsert) {
+        bulk.push(bulkAction, object);
+      }
 
       // DEBUG TRANSFORMATION
       /*
