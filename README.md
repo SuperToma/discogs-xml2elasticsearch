@@ -64,4 +64,5 @@ cd downloads
 wget https://discogs-data.s3-us-west-2.amazonaws.com/data/2018/discogs_20180601_artists.xml.gz
 wget https://discogs-data.s3-us-west-2.amazonaws.com/data/2018/discogs_20180601_masters.xml.gz
 wget https://discogs-data.s3-us-west-2.amazonaws.com/data/2018/discogs_20180601_releases.xml.gz
+gunzip discogs_20180601_*
 ```
