@@ -55,4 +55,12 @@ implement labels import :
 
 ## Known bugs
 
- - Memory leak with Node 8 (prefer Node 10)
+ - Memory leak on Debian 9 while downloading Discogs files.
+You can download them manually :
+
+```
+cd downloads
+ wget https://discogs-data.s3-us-west-2.amazonaws.com/data/2018/discogs_20180601_artists.xml.gz
+wget https://discogs-data.s3-us-west-2.amazonaws.com/data/2018/discogs_20180601_masters.xml.gz
+wget https://discogs-data.s3-us-west-2.amazonaws.com/data/2018/discogs_20180601_releases.xml.gz
+```
