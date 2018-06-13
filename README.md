@@ -44,7 +44,7 @@ Optional arguments:
                         
 Example command : 
 
-> pm run import -- --d 20170101 -f master
+> npm run import -- --d 20170101 -f master
                         
 ## Todo 
 
@@ -54,3 +54,5 @@ implement labels import :
  - Add mapping in src/elasticsearch/mappings/labels.mapping.json
 
 ## Known bugs
+
+ - Memory leak with Node 8 (prefer node 10)
