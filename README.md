@@ -55,4 +55,4 @@ implement labels import :
 
 ## Known bugs
 
- - Memory leak with Node 8 (prefer node 10)
+ - Memory leak with Node 8 (prefer Node 10)
