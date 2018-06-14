@@ -18,20 +18,24 @@ This will create an index for each files :
 ## Installation :
 
 1. Run 
-> npm install
+```
+npm install
+```
 
 2. Configure your Elasticsearch configuration in file config/config.json
 
 ## Usage :
 
-> npm run import -- -h
+```
+npm run import -- -h
+```
 
 usage: boot.js [-h] [-v] [-d DATE] [-f {artists,masters,releases,labels}]
 
 Discogs XMLs to Elasticsearch importer
 
 Optional arguments:
-
+```
   -h, --help            Show this help message and exit.
   
   -v, --version         Show program's version number and exit.
@@ -41,11 +45,14 @@ Optional arguments:
   
   -f {artists,masters,releases,labels}, --file {artists,masters,releases,labels}
                         Specify a Discogs type to import
-                        
+```      
+
 Example command : 
 
-> npm run import -- --d 20170101 -f master
-                        
+```
+npm run import -- --d 20170101 -f master
+```
+
 ## Todo 
 
 implement labels import :
@@ -57,7 +64,7 @@ implement labels import :
 
  - Memory leak on Debian 9 while downloading Discogs files.
  
-You can download them manually :
+You can download them manually and run the import command after :
 
 ```
 cd downloads
@@ -65,4 +72,6 @@ wget https://discogs-data.s3-us-west-2.amazonaws.com/data/2018/discogs_20180601_
 wget https://discogs-data.s3-us-west-2.amazonaws.com/data/2018/discogs_20180601_masters.xml.gz
 wget https://discogs-data.s3-us-west-2.amazonaws.com/data/2018/discogs_20180601_releases.xml.gz
 gunzip discogs_20180601_*
+cd ..
+npm run import -- --d 20170101 -f master
 ```
