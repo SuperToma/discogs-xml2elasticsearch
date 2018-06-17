@@ -66,7 +66,8 @@
     },
     "notes": {
       "type": "keyword",
-      "index": false
+      "index": false,
+      "ignore_above": 32000
     },
     "styles": {
       "type": "keyword",

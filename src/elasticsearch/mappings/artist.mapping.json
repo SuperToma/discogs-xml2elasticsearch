@@ -15,7 +15,8 @@
     },
     "profile": {
       "type": "keyword",
-      "index": false
+      "index": false,
+      "ignore_above": 32000
     },
     "url": {
       "type": "keyword",

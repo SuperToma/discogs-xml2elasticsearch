@@ -73,7 +73,7 @@ class XmlParser {
 
     const filePath = `${__dirname}/../downloads/discogs_${this.date}_${tag}s.xml`;
     const totalObjects = await this.getNbTagsInFile(filePath, tag);
-    //const totalObjects = 8000000;
+    //const totalObjects = 10000000;
 
     let bulk = [];
 
@@ -147,7 +147,7 @@ class XmlParser {
       } */
 
       // Filters
-      let allowInsert = false;
+      let allowInsert = true;
 
       /* 100/s slower
       const authorizedGenres = ["Brass & Military", "Electronic", "Pop", "Rock"];
@@ -164,10 +164,10 @@ class XmlParser {
         "Gothic Metal", "Industrial", "New Wave", "Synthwave", "Synth-pop",
       ];
 
-      if (typeof object.styles !== "undefined") {
-        if (_.intersection(object.styles, authorizedStyles).length > 0) {
+      if (tag === 'release' && typeof object.styles !== "undefined") {
+        if (_.intersection(object.styles, authorizedStyles).length === 0) {
           //console.log(_.intersection(object.styles, authorizedStyles));
-          allowInsert = true;
+          allowInsert = false;
         }
       }
 
@@ -184,7 +184,7 @@ class XmlParser {
       //process.exit(0);
       */
 
-      if (bulk.length === 1000) {
+      if (bulk.length > 1000) {
         EsClient.sendBulk(bulk);
         bulk = [];
       }
