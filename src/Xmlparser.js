@@ -122,12 +122,12 @@ class XmlParser {
           }
 
           // Remove empty images uri
-          if (property === 'images') {
+          if (Array.isArray(values) && property === 'images') {
             values = values.filter(value => value.uri.length > 0);
           }
 
           // Remove empty tracks
-          if (property === 'tracklist') {
+          if (Array.isArray(values) && property === 'tracklist') {
             values = values.filter(value => value.title[0].length > 0);
           }
 
@@ -147,7 +147,7 @@ class XmlParser {
       } */
 
       // Filters
-      let allowInsert = true;
+      //let allowInsert = true;
 
       /* 100/s slower
       const authorizedGenres = ["Brass & Military", "Electronic", "Pop", "Rock"];
@@ -158,7 +158,7 @@ class XmlParser {
       }
       */
 
-      const authorizedStyles = [
+      /*const authorizedStyles = [
         "Dark Ambient", "Darkwave", "EBM", "Electro", "Goth Rock",
         //"Experimental", "Witch House",
         "Gothic Metal", "Industrial", "New Wave", "Synthwave", "Synth-pop",
@@ -169,20 +169,21 @@ class XmlParser {
           //console.log(_.intersection(object.styles, authorizedStyles));
           allowInsert = false;
         }
-      }
+      }*/
 
-      if (allowInsert) {
+      //if (allowInsert) {
         bulk.push(bulkAction, object);
-      }
+      //}
 
       // DEBUG TRANSFORMATION
+
       /*
       console.log('\n\n\n>>>');
-      console.log(util.inspect(data.release.tracklist, false, null));
+      console.log(util.inspect(data.release, false, null));
       console.log('<<<');
-      console.log(util.inspect(object.tracklist, false, null));
-      //process.exit(0);
-      */
+      console.log(util.inspect(object, false, null));
+      process.exit(0);
+*/
 
       if (bulk.length > 1000) {
         EsClient.sendBulk(bulk);

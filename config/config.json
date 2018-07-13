@@ -40,7 +40,7 @@
       "id": "$.id",
       "status": "$.status",
       "images": "images[0].image",
-      "artists": "artists[0]",
+      "artists": "artists",
       "title": "title[0]",
       "labels": "labels[0].label",
       "extraartists": "extraartists[0].artist[0]",

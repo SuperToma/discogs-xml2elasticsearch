@@ -14,28 +14,32 @@
     },
     "artists": {
       "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "keyword",
-          "index": false
-        },
-        "anv": {
-          "type": "keyword",
-          "index": false
-        },
-        "join": {
-          "type": "keyword",
-          "index": false
-        },
-        "role": {
-          "type": "keyword",
-          "index": false
-        },
-        "tracks": {
-          "type": "keyword",
-          "index": false
+        "artist": {
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "keyword",
+              "index": false
+            },
+            "anv": {
+              "type": "keyword",
+              "index": false
+            },
+            "join": {
+              "type": "keyword",
+              "index": false
+            },
+            "role": {
+              "type": "keyword",
+              "index": false
+            },
+            "tracks": {
+              "type": "keyword",
+              "index": false
+            }
+          }
         }
       }
     },
