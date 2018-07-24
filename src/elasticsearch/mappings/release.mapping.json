@@ -112,6 +112,7 @@
       "index": false
     },
     "tracklist": {
+      "type": "nested",
       "properties": {
         "position": {
           "type": "keyword",
