@@ -18,7 +18,7 @@ argsParser.addArgument(
   {
     choices: ['artist', 'master', 'release', 'label'],
     defaultValue: ['artist', 'master', 'release', 'label'],
-    help: 'Specify a Discogs type to import',
+    help: 'Specify a Discogs index to import',
   },
 );
 

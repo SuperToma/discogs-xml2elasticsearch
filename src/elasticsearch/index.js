@@ -95,7 +95,6 @@ EsClient.checkIndex = async function (indexName) {
 
   const result = await EsClient.indices.putMapping({
     index: indexName,
-    type: indexName,
     body: mapping,
   });
 
