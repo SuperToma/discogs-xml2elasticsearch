@@ -20,11 +20,11 @@ EsClient.checkping = async function () {
 
   if (result.statusCode === 200) {
     console.log('Elasticsearch cluster is up!');
-  } else {
-    console.error('elasticsearch cluster is down!');
-    console.log(result)
-    process.exit(1);
+    return;
   }
+  console.error('elasticsearch cluster is down!');
+  console.log(result)
+  process.exit(1);
 };
 
 EsClient.createIndex = async function (indexName) {
@@ -113,17 +113,15 @@ EsClient.checkIndex = async function (indexName) {
 };
 
 EsClient.sendBulk = function (bulk) {
-  EsClient.bulk({
-    body: bulk,
-  }, (error, resp) => {
-    if (resp.errors) {
-      console.log('>>>');
-      console.log(util.inspect(bulk, false, null));
-      console.log('<<<');
-      console.log(util.inspect(resp, false, null));
-      process.exit(1);
-    }
-  });
+  try {
+    EsClient.bulk({ body: bulk });
+  } catch (err) {
+    console.error(`Bulk failed:\n<<<<<<<<<<<<<<<<`);
+    console.log(util.inspect(bulk, false, null));
+    console.log('>>>>>>>>>>>>>>>>');
+    console.log(util.inspect(err));
+    process.exit(1);
+  }
 };
 
 export default EsClient;
