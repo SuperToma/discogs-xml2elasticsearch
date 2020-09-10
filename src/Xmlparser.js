@@ -73,7 +73,7 @@ class XmlParser {
 
     const filePath = `${__dirname}/../downloads/discogs_${this.date}_${tag}s.xml`;
     const totalObjects = await this.getNbTagsInFile(filePath, tag);
-    //const totalObjects = 10000000;
+    // const totalObjects = 10000000;
 
     let bulk = [];
 
@@ -89,16 +89,13 @@ class XmlParser {
       .pipe(new XmlTagStream(tag))
       .pipe(through2.obj((tag, enc, cb) => xmlParser.parseString(tag, cb)));
 
-    stream.on('data', data => {
-      bar.tick({
-        remain: this.getBarRemainTime(bar),
-      });
+    stream.on('data', async (data) => {
+      bar.tick({remain: this.getBarRemainTime(bar)});
       // console.log(util.inspect(data, false, null));
       // process.exit(0);
       const bulkAction = {
         index: {
           _index: tag,
-          _type: tag,
           _id: eval(`data.${tag}.${config.objects[tag].id}`),
         },
 
@@ -186,14 +183,16 @@ class XmlParser {
 */
 
       if (bulk.length > 1000) {
-        EsClient.sendBulk(bulk);
+        await EsClient.sendBulk(bulk);
         bulk = [];
       }
+    })
+    .on('end', () => {
+      if (bulk.length > 0) {
+        EsClient.sendBulk(bulk); // Send last bulk
+      }
+      console.log.bind(console, `Import of ${tag}s ended !`)
     });
-
-    EsClient.sendBulk(bulk); // Send last bulk
-
-    stream.on('end', console.log.bind(console, `Import of ${tag}s ended !`));
   }
 }
 

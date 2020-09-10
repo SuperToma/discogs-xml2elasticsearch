@@ -112,14 +112,14 @@ EsClient.checkIndex = async function (indexName) {
   }
 };
 
-EsClient.sendBulk = function (bulk) {
+EsClient.sendBulk = async function (bulk) {
   try {
-    EsClient.bulk({ body: bulk });
+    await EsClient.bulk({ body: bulk });
   } catch (err) {
     console.error(`Bulk failed:\n<<<<<<<<<<<<<<<<`);
     console.log(util.inspect(bulk, false, null));
     console.log('>>>>>>>>>>>>>>>>');
-    console.log(util.inspect(err));
+    console.log(util.inspect(err, false, null));
     process.exit(1);
   }
 };
