@@ -180,10 +180,13 @@ class XmlParser {
       console.log('<<<');
       console.log(util.inspect(object, false, null));
       process.exit(0);
-*/
+      */
 
       if (bulk.length > 1000) {
+        stream.pause();
         await EsClient.sendBulk(bulk);
+        stream.resume();
+
         bulk = [];
       }
     })

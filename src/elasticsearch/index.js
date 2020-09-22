@@ -8,6 +8,8 @@ const EsClient = new Elasticsearch.Client({
   // log: 'trace'
 });
 
+EsClient.sleep = async (ms) => new Promise(res => setTimeout(res, ms));
+
 EsClient.checkAll = async function (indexes) {
   await EsClient.checkping().catch(console.log);
   for (const indexName of indexes) {
@@ -113,15 +115,36 @@ EsClient.checkIndex = async function (indexName) {
 };
 
 EsClient.sendBulk = async function (bulk) {
-  try {
-    await EsClient.bulk({ body: bulk });
-  } catch (err) {
-    console.error(`Bulk failed:\n<<<<<<<<<<<<<<<<`);
-    console.log(util.inspect(bulk, false, null));
-    console.log('>>>>>>>>>>>>>>>>');
-    console.log(util.inspect(err, false, null));
-    process.exit(1);
-  }
+  let count = 0;
+  const maxTries = 3;
+
+  await EsClient.bulk({ body: bulk });
+
+  /* Working but not necessary
+  while (true) {
+    try {
+      await EsClient.bulk({ body: bulk });
+      break;
+    } catch (err) {
+      // 429: overloaded es_rejected_execution_exception
+      if (err.meta.statusCode === 429) {
+        count++;
+        if (count > maxTries) {
+          console.log('Script aborded after 5 Elasticsearch bulk attempts');
+          process.exit(1);
+        } else {
+          console.log(`Server overloaded, retry ${count}/5 in 3 seconds...`);
+          await EsClient.sleep(3000);
+        }
+      } else {
+        console.error(`Bulk failed:\n<<<<<<<<<<<<<<<<`);
+        console.log(util.inspect(bulk, false, null));
+        console.log('>>>>>>>>>>>>>>>>');
+        console.log(util.inspect(err, false, null));
+        process.exit(1);
+      }
+    }
+  } */
 };
 
 export default EsClient;
