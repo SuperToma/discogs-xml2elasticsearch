@@ -87,10 +87,18 @@ class XmlParser {
 
     const stream = fs.createReadStream(filePath)
       .pipe(new XmlTagStream(tag))
-      .pipe(through2.obj((tag, enc, cb) => xmlParser.parseString(tag, cb)));
+      .pipe(through2.obj((tag, enc, cb) => {
+        try {
+          xmlParser.parseString(tag, cb);
+        } catch (err) {
+          console.log("XML parse error in tag:");
+          console.log(tag);
+          cb(null, tag);
+        }
+      }));
 
     stream.on('data', async (data) => {
-      bar.tick({remain: this.getBarRemainTime(bar)});
+      bar.tick({ remain: this.getBarRemainTime(bar) });
       // console.log(util.inspect(data, false, null));
       // process.exit(0);
       const bulkAction = {
@@ -98,7 +106,6 @@ class XmlParser {
           _index: tag,
           _id: eval(`data.${tag}.${config.objects[tag].id}`),
         },
-
       };
 
       const object = {};
@@ -144,7 +151,7 @@ class XmlParser {
       } */
 
       // Filters
-      //let allowInsert = true;
+      // let allowInsert = true;
 
       /* 100/s slower
       const authorizedGenres = ["Brass & Military", "Electronic", "Pop", "Rock"];
@@ -155,7 +162,7 @@ class XmlParser {
       }
       */
 
-      /*const authorizedStyles = [
+      /* const authorizedStyles = [
         "Dark Ambient", "Darkwave", "EBM", "Electro", "Goth Rock",
         //"Experimental", "Witch House",
         "Gothic Metal", "Industrial", "New Wave", "Synthwave", "Synth-pop",
@@ -166,11 +173,11 @@ class XmlParser {
           //console.log(_.intersection(object.styles, authorizedStyles));
           allowInsert = false;
         }
-      }*/
+      } */
 
-      //if (allowInsert) {
+      // if (allowInsert) {
         bulk.push(bulkAction, object);
-      //}
+      // }
 
       // DEBUG TRANSFORMATION
 
@@ -190,12 +197,12 @@ class XmlParser {
         bulk = [];
       }
     })
-    .on('end', () => {
-      if (bulk.length > 0) {
-        EsClient.sendBulk(bulk); // Send last bulk
-      }
-      console.log.bind(console, `Import of ${tag}s ended !`)
-    });
+      .on('end', () => {
+        if (bulk.length > 0) {
+          EsClient.sendBulk(bulk); // Send last bulk
+        }
+        console.log.bind(console, `Import of ${tag}s ended !`);
+      });
   }
 }
 
