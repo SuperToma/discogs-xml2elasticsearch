@@ -3,6 +3,7 @@ import util from 'util';
 import XmlTagStream from 'xml-tag-stream';
 import through2 from 'through2';
 import xmlParser from 'xml2js';
+import parser from 'fast-xml-parser';
 import ProgressBar from 'progress';
 import _ from 'underscore';
 import config from '../config/config.json';
@@ -73,7 +74,7 @@ class XmlParser {
 
     const filePath = `${__dirname}/../downloads/discogs_${this.date}_${tag}s.xml`;
     const totalObjects = await this.getNbTagsInFile(filePath, tag);
-    // const totalObjects = 10000000;
+    // const totalObjects = 13078916;
 
     let bulk = [];
 
@@ -88,12 +89,11 @@ class XmlParser {
     const stream = fs.createReadStream(filePath)
       .pipe(new XmlTagStream(tag))
       .pipe(through2.obj((tag, enc, cb) => {
-        try {
+        if (parser.validate(tag) === true) {
           xmlParser.parseString(tag, cb);
-        } catch (err) {
-          console.log("XML parse error in tag:");
-          console.log(tag);
-          cb(null, tag);
+        } else {
+          console.log("1 tag was not XML valid");
+          return cb();
         }
       }));
 
