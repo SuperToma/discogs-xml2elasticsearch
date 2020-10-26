@@ -3,6 +3,7 @@ import util from 'util';
 import XmlTagStream from 'xml-tag-stream';
 import through2 from 'through2';
 import xmlParser from 'xml2js';
+import parser from 'fast-xml-parser';
 import ProgressBar from 'progress';
 import _ from 'underscore';
 import config from '../config/config.json';
@@ -73,7 +74,7 @@ class XmlParser {
 
     const filePath = `${__dirname}/../downloads/discogs_${this.date}_${tag}s.xml`;
     const totalObjects = await this.getNbTagsInFile(filePath, tag);
-    //const totalObjects = 10000000;
+    // const totalObjects = 13078916;
 
     let bulk = [];
 
@@ -87,21 +88,24 @@ class XmlParser {
 
     const stream = fs.createReadStream(filePath)
       .pipe(new XmlTagStream(tag))
-      .pipe(through2.obj((tag, enc, cb) => xmlParser.parseString(tag, cb)));
+      .pipe(through2.obj((tag, enc, cb) => {
+        if (parser.validate(tag) === true) {
+          xmlParser.parseString(tag, cb);
+        } else {
+          console.log("1 tag was not XML valid");
+          return cb();
+        }
+      }));
 
-    stream.on('data', data => {
-      bar.tick({
-        remain: this.getBarRemainTime(bar),
-      });
+    stream.on('data', async (data) => {
+      bar.tick({ remain: this.getBarRemainTime(bar) });
       // console.log(util.inspect(data, false, null));
       // process.exit(0);
       const bulkAction = {
         index: {
           _index: tag,
-          _type: tag,
           _id: eval(`data.${tag}.${config.objects[tag].id}`),
         },
-
       };
 
       const object = {};
@@ -147,7 +151,7 @@ class XmlParser {
       } */
 
       // Filters
-      //let allowInsert = true;
+      // let allowInsert = true;
 
       /* 100/s slower
       const authorizedGenres = ["Brass & Military", "Electronic", "Pop", "Rock"];
@@ -158,7 +162,7 @@ class XmlParser {
       }
       */
 
-      /*const authorizedStyles = [
+      /* const authorizedStyles = [
         "Dark Ambient", "Darkwave", "EBM", "Electro", "Goth Rock",
         //"Experimental", "Witch House",
         "Gothic Metal", "Industrial", "New Wave", "Synthwave", "Synth-pop",
@@ -169,11 +173,11 @@ class XmlParser {
           //console.log(_.intersection(object.styles, authorizedStyles));
           allowInsert = false;
         }
-      }*/
+      } */
 
-      //if (allowInsert) {
+      // if (allowInsert) {
         bulk.push(bulkAction, object);
-      //}
+      // }
 
       // DEBUG TRANSFORMATION
 
@@ -183,17 +187,22 @@ class XmlParser {
       console.log('<<<');
       console.log(util.inspect(object, false, null));
       process.exit(0);
-*/
+      */
 
       if (bulk.length > 1000) {
-        EsClient.sendBulk(bulk);
+        stream.pause();
+        await EsClient.sendBulk(bulk);
+        stream.resume();
+
         bulk = [];
       }
-    });
-
-    EsClient.sendBulk(bulk); // Send last bulk
-
-    stream.on('end', console.log.bind(console, `Import of ${tag}s ended !`));
+    })
+      .on('end', () => {
+        if (bulk.length > 0) {
+          EsClient.sendBulk(bulk); // Send last bulk
+        }
+        console.log.bind(console, `Import of ${tag}s ended !`);
+      });
   }
 }
 

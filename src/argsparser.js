@@ -1,28 +1,25 @@
 import { ArgumentParser } from 'argparse';
 
 const argsParser = new ArgumentParser({
-  version: '0.0.1',
-  addHelp: true,
+  add_help: true,
   description: 'Discogs XMLs to Elasticsearch importer',
 });
 
-argsParser.addArgument(
-  ['-d', '--date'],
-  {
-    help: 'Specify a Discogs date file. ex: 20170101',
-  },
+argsParser.add_argument(
+  '-d', '--date', {help: 'Specify a Discogs date file. ex: 20170101',},
 );
 
-argsParser.addArgument(
-  ['-f', '--file'],
+argsParser.add_argument(
+  '-f',
+  '--file',
   {
     choices: ['artist', 'master', 'release', 'label'],
-    defaultValue: ['artist', 'master', 'release', 'label'],
-    help: 'Specify a Discogs type to import',
+    default: ['artist', 'master', 'release', 'label'],
+    help: 'Specify a Discogs index to import',
   },
 );
 
-const args = argsParser.parseArgs();
+const args = argsParser.parse_args();
 
 if (args.date === null) {
   console.error('Date argument must be specified');
