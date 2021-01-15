@@ -1,3 +1,13 @@
+# WARNING: This repository is no longer maintained :warning:
+
+It has been rewrited in Python3, available [here](https://github.com/SuperToma/discogs-xml-to-elasticsearch)
+
+  - slower: more than 2 times faster in Python even reading the gzip file without extract
+  - slow unserialization: NodeJS unserialize all the XML elements, can't unserialize only some specific XML fields
+  - more stable: no NodeJS core crashes
+  - simpler, more readable, less lines, no callbacks hell & pyramid of Doom
+
+
 # discogs-xml2elasticsearch
 
 This project is a importer of Discogs XMLs : https://data.discogs.com/
